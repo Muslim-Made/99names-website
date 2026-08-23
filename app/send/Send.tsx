@@ -25,8 +25,8 @@ export default function Send() {
         <div className="card">
           <div className="field"><label>The name</label>
             <select value={slug} onChange={e => setSlug(e.target.value)}>{NAMES.map(n => <option key={n.slug} value={n.slug}>{n.n}. {n.tr} — {n.en}</option>)}</select></div>
-          <div className="field"><label>To</label><input value={to} onChange={e => setTo(e.target.value)} placeholder="Amina" /></div>
-          <div className="field"><label>From (optional)</label><input value={from} onChange={e => setFrom(e.target.value)} placeholder="Ismael" /></div>
+          <div className="field"><label>To</label><input value={to} onChange={e => setTo(e.target.value)} placeholder="Nayla" /></div>
+          <div className="field"><label>From (optional)</label><input value={from} onChange={e => setFrom(e.target.value)} placeholder="Amaar" /></div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 8 }}>
             <button className="pill" onClick={share}>{copied ? "Link copied" : "Send the link"}</button>
             <Link href="/shop" className="pill o">Post the real card · $6</Link>

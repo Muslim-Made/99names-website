@@ -21,7 +21,7 @@ export default function AppPage() {
       </div>
       <div className="phone"><div className="sc" style={{ background: "linear-gradient(160deg,#F6DCCF,#EFD9B8 35%,#CFD9C4 70%,#C9DBE6)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10, letterSpacing: ".16em", textTransform: "uppercase", opacity: .7 }}><span>Fajr · 05:14</span><span>Week 12</span></div>
-        <div style={{ fontFamily: "var(--disp)", fontSize: 30, lineHeight: 1.05 }}>Good morning,<br /><em>Ismael.</em></div>
+        <div style={{ fontFamily: "var(--disp)", fontSize: 30, lineHeight: 1.05 }}>Good morning,<br /><em>Amaar.</em></div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, textAlign: "center" }}>
           <div className="ar" style={{ fontSize: 54 }}>{n.ar}</div>
           <div style={{ fontFamily: "var(--disp)", fontStyle: "italic", fontSize: 16, opacity: .85 }}>{n.en}</div>
