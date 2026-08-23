@@ -6,9 +6,13 @@ Next.js site for the 99 Names of Allah. Direction 03 "Noor": the page tints itse
     npm install
     npm run dev        # http://localhost:3000
 
-## Deploy to Vercel
-    npx vercel         # new project, accept defaults (framework: Next.js)
-    npx vercel --prod
+## Deploy
+Live: **https://99names-site.vercel.app** (Vercel project `99names-site`)
+
+    npx vercel deploy --prod --yes
+
+Note: a separate, pre-existing Vercel project called `99names` belongs to something else and is
+deliberately NOT used by this site. The brand book is its own project, `99names-brand`.
 
 ## Where things live
 - `lib/names.ts` — all 99 names (Arabic, transliteration, meaning, root, one-line reflection). Edit copy here.
