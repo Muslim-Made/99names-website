@@ -36,6 +36,7 @@ em{font-style:italic;font-weight:400}
 html[data-hour="maghrib"] .pill,html[data-hour="isha"] .pill{color:var(--night)}
 .pill:hover{transform:translateY(-1px)}
 .pill.o{background:transparent;border:1px solid var(--fg);color:var(--fg)}
+html[data-hour="maghrib"] .pill.o,html[data-hour="isha"] .pill.o{color:var(--fg)}
 .pill.small{padding:9px 18px;font-size:10.5px}
 .breath{display:inline-block;border-radius:50%;background:var(--sun);animation:br 4s ease-in-out infinite}
 @keyframes br{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.7);opacity:1}}
