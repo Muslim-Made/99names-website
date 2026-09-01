@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useHour } from "./HourProvider";
-import { HOURS, HOUR_LABEL } from "@/lib/hour";
+import { HOUR_LABEL } from "@/lib/hour";
 import { Mark } from "./Rays";
+import Ambience from "./Ambience";
 
 export default function Footer() {
-  const { hour, override, setOverride, source } = useHour();
+  const { hour, override, source } = useHour();
   return (
     <footer className="footer">
       <div className="wrap">
@@ -17,12 +18,10 @@ export default function Footer() {
           </div>
           <div className="fcol"><b>Explore</b><Link href="/names">All 99 names</Link><Link href="/remember">Remember</Link><Link href="/send">Send a name</Link><Link href="/app">The app</Link></div>
           <div className="fcol"><b>Shop</b><Link href="/shop">The Deck</Link><Link href="/shop">Send-a-Name</Link><Link href="/shop">Ramadan Edition</Link></div>
-          <div className="fcol"><b>The hour</b>
-            <p className="note" style={{ marginBottom: 10 }}>This page is tinted for <strong>{HOUR_LABEL[hour]}</strong>{override ? " (set by you)" : ` (${source})`}.</p>
-            <div className="hours">
-              {HOURS.map(h => <button key={h} className={h === hour ? "on" : ""} onClick={() => setOverride(h)}>{HOUR_LABEL[h]}</button>)}
-              {override && <button onClick={() => setOverride(null)}>Auto</button>}
-            </div>
+          <div className="fcol"><b>This hour</b>
+            <p className="note" style={{ marginBottom: 10 }}>The site is tinted for <strong>{HOUR_LABEL[hour]}</strong>{override ? " (set by you)" : ` (${source})`}. Change it from the dial in the top bar.</p>
+            <div><Ambience /></div>
+            <p className="note" style={{ marginTop: 6 }}>A quiet, generative sound for this hour. Nothing recorded, nothing looping.</p>
           </div>
         </div>
         <div className="fbot"><span>© {new Date().getFullYear()} 99names</span><span>Instagram · @official99names</span></div>

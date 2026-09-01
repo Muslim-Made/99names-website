@@ -14,16 +14,19 @@ export function Rays({ r1 = 120, r2 = 190, w = 1, className, style, color = "cur
   );
 }
 
-export function Mark({ size = 28, color = "currentColor" }: { size?: number; color?: string }) {
+export function Mark({ size = 28, color = "currentColor", numeral = true }: { size?: number; color?: string; numeral?: boolean }) {
   const lines = [];
   for (let i = 0; i < 99; i++) {
     const a = (i / 99) * Math.PI * 2 - Math.PI / 2;
-    lines.push(<line key={i} x1={f(50 + Math.cos(a) * 26)} y1={f(50 + Math.sin(a) * 26)} x2={f(50 + Math.cos(a) * 48)} y2={f(50 + Math.sin(a) * 48)} />);
+    lines.push(<line key={i} x1={f(50 + Math.cos(a) * 28)} y1={f(50 + Math.sin(a) * 28)} x2={f(50 + Math.cos(a) * 48)} y2={f(50 + Math.sin(a) * 48)} />);
   }
   return (
     <svg viewBox="0 0 100 100" width={size} height={size} aria-hidden="true">
       <g stroke={color} strokeWidth="1.4" strokeLinecap="round">{lines}</g>
-      <circle cx="50" cy="50" r="9" fill={color} />
+      {numeral && (
+        <text x="50" y="51.5" textAnchor="middle" dominantBaseline="central" fill={color}
+          style={{ fontFamily: "var(--disp), Georgia, serif", fontSize: 27, fontWeight: 400, letterSpacing: "-0.04em" }}>99</text>
+      )}
     </svg>
   );
 }
