@@ -17,7 +17,7 @@ export default function Footer() {
             <p className="ar sig">الأسماء الحسنى</p>
           </div>
           <div className="fcol"><b>Explore</b><Link href="/names">All 99 names</Link><Link href="/remember">Remember</Link><Link href="/send">Send a name</Link><Link href="/app">The app</Link></div>
-          <div className="fcol"><b>Shop</b><Link href="/shop">The Deck</Link><Link href="/shop">Send-a-Name</Link><Link href="/shop">Ramadan Edition</Link></div>
+          <div className="fcol"><b>Shop</b><Link href="/shop/deck">The Deck</Link><Link href="/send">Send-a-Name</Link><Link href="/shop/print">The Name Print</Link><Link href="/shop/ramadan">Ramadan Edition</Link><Link href="/shop">Everything</Link></div>
           <div className="fcol"><b>This hour</b>
             <p className="note" style={{ marginBottom: 10 }}>The site is tinted for <strong>{HOUR_LABEL[hour]}</strong>{override ? " (set by you)" : ` (${source})`}. Change it from the dial in the top bar.</p>
             <div><Ambience /></div>

@@ -34,7 +34,7 @@ export default function Home() {
       <section>
         <div className="wrap grid g3" data-reveal data-stagger>
           <Link href="/remember" className="card feature"><div className="eyebrow">Remember</div><h3 style={{ marginTop: 10 }}>Do you remember this one?</h3><p className="note">A quiet ten-question round. Wrong answers just show you the name again, warmly. Share how many you know.</p></Link>
-          <Link href="/send" className="card feature"><div className="eyebrow">Send a name</div><h3 style={{ marginTop: 10 }}>For whoever needs it this week.</h3><p className="note">Pick a name, write who it's for, send a link — or a real card in the post.</p></Link>
+          <Link href="/send" className="card feature"><div className="eyebrow">Send a name</div><h3 style={{ marginTop: 10 }}>For whoever needs it this week.</h3><p className="note">Tell us who it's for and what they're going through. Send a link for free, or the real card, posted anywhere, for $6.</p></Link>
           <Link href="/app" className="card feature"><div className="eyebrow">The app</div><h3 style={{ marginTop: 10 }}>It knows what time it is.</h3><p className="note">Blush at Fajr, navy at Isha. One name, one breath, no streaks, no guilt.</p></Link>
         </div>
       </section>

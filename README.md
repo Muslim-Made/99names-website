@@ -23,3 +23,19 @@ deliberately NOT used by this site. The brand book is its own project, `99names-
 - `components/Listen.tsx` — placeholder recitation via the browser's Arabic voice; swap for real audio files when recorded.
 
 Logo assets: `../brand/logo/` (SVG + PNG).
+
+## Payments & orders
+
+Send-a-Name (`/send`) and the shop (`/shop`, `/checkout`) charge through a hosted checkout.
+Copy `.env.example` to `.env.local` and fill in:
+
+- `PAY_PROVIDER` — `squad` (default) or `paystack`; `PAY_CURRENCY` — `NGN` (default) or `USD`.
+- `SQUAD_SECRET_KEY` (sandbox keys from sandbox.squadco.com, live from dashboard.squadco.com). The base URL is picked from the key prefix.
+- `UPSTASH_REDIS_REST_URL` / `_TOKEN` (or Vercel KV) so orders persist. Without them orders live in memory (dev only).
+- `RESEND_API_KEY` + `ORDER_EMAIL` so every paid order and every recipient address lands in the team inbox.
+
+Webhooks: point Squad at `/api/webhooks/squad` and Paystack at `/api/webhooks/paystack`. Both verify the HMAC-SHA512 signature, re-verify the transaction with the provider, and only then mark the order paid.
+
+With no keys set the checkout runs in **test mode**: the order is created and the buyer lands on `/checkout/done?…&test=1` so the whole flow can be walked end to end.
+
+Free links need no backend: `/for/<token>` carries the name, the recipient, the note and an optional delivery date in the URL (`lib/send.ts`).
