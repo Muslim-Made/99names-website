@@ -1,0 +1,47 @@
+# Deploy to Vercel production on every push to main.
+#
+# The muslim-made Vercel team is on the Hobby plan, which can't connect private organization
+# repos, so this workflow deploys through the Vercel CLI instead. It needs one repository secret,
+# VERCEL_TOKEN (Vercel → Account Settings → Tokens). Without it the run stops with a warning.
+#
+# The git folder is removed before deploying: Vercel blocks deploys whose commit author isn't a
+# member of the team, and with no git metadata attached there is no author to check.
+name: Deploy the website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_N1RhOXW8cakUTnN46nAJKWoa
+      VERCEL_PROJECT_ID: prj_KdF85ai4lpFZTq7LvSlNlY63pvo3
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - name: Check for the Vercel token
+        id: token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::warning::VERCEL_TOKEN is not set in this repository's secrets, so nothing was deployed."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.token.outputs.ok == 'true'
+      - uses: actions/setup-node@v4
+        if: steps.token.outputs.ok == 'true'
+        with:
+          node-version: 22
+      - name: Deploy to production (noor.99names.net)
+        if: steps.token.outputs.ok == 'true'
+        run: |
+          rm -rf .git
+          npx --yes vercel@latest deploy --prod --yes --token "$VERCEL_TOKEN"
