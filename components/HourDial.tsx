@@ -17,7 +17,7 @@ export const SWATCH: Record<Hour, string> = {
  * The hour dial: lives in the nav. Tap to open the six hours of the day;
  * pick one to tint the whole site, or let it follow the sky (Auto).
  */
-export default function HourDial() {
+export default function HourDial({ inline = false }: { inline?: boolean }) {
   const { hour, override, setOverride } = useHour();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -30,6 +30,26 @@ export default function HourDial() {
     document.addEventListener("keydown", esc);
     return () => { document.removeEventListener("pointerdown", close); document.removeEventListener("keydown", esc); };
   }, [open]);
+
+  // inside the phone menu the six hours sit in the open: no popover to chase with a thumb
+  if (inline) return (
+    <div className="hd-inline">
+      <div className="hd-inline-head">
+        <span>The hour · <b>{HOUR_LABEL[hour]}</b></span>
+        <button className={`hd-follow ${override ? "" : "on"}`} onClick={() => setOverride(null)} aria-pressed={!override}>
+          {override ? "Follow the sky" : "Following the sky"}
+        </button>
+      </div>
+      <div className="hd-row" role="radiogroup" aria-label="Tint the site for an hour of the day">
+        {HOURS.map(h => (
+          <button key={h} role="radio" aria-checked={h === hour} className={`hd-chip ${h === hour ? "on" : ""}`} onClick={() => setOverride(h)}>
+            <span className="hd-swatch" style={{ background: SWATCH[h] }} aria-hidden="true" />
+            <span>{HOUR_LABEL[h]}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
     <div className="hourdial" ref={ref}>

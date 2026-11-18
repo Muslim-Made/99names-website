@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
  *  - [data-reveal]            fades/rises in when it enters the viewport
  *    (stagger children by putting data-reveal on the parent with data-stagger)
  *  - [data-parallax="0.15"]   translates against scroll by that factor
+ *  - [data-scrub]             gets --p, 0 to 1, as it travels up through the viewport
  *  - .ncard-link              gets a gentle pointer tilt
  */
 export default function Motion() {
@@ -16,6 +17,7 @@ export default function Motion() {
     document.documentElement.classList.add("motion-ready");
     if (reduced) {
       document.querySelectorAll("[data-reveal]").forEach(el => el.classList.add("in"));
+      document.querySelectorAll<HTMLElement>("[data-scrub]").forEach(el => el.style.setProperty("--p", "1"));
       return;
     }
 
@@ -28,6 +30,7 @@ export default function Motion() {
     const px = [...document.querySelectorAll<HTMLElement>("[data-parallax]")].map(el => ({
       el, f: parseFloat(el.dataset.parallax || "0.1"),
     }));
+    const scrub = [...document.querySelectorAll<HTMLElement>("[data-scrub]")];
     let raf = 0;
     const onScroll = () => {
       if (raf) return;
@@ -39,9 +42,15 @@ export default function Motion() {
           const c = r.top + r.height / 2 - vh / 2;
           el.style.transform = `translate3d(0, ${(-c * f).toFixed(1)}px, 0)`;
         }
+        for (const el of scrub) {
+          const r = el.getBoundingClientRect();
+          const p = Math.min(1, Math.max(0, (vh - r.top) / (vh + r.height)));
+          el.style.setProperty("--p", p.toFixed(3));
+        }
       });
     };
     addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll, { passive: true });
     onScroll();
 
     // pointer tilt on cards
@@ -67,6 +76,7 @@ export default function Motion() {
     return () => {
       io.disconnect();
       removeEventListener("scroll", onScroll);
+      removeEventListener("resize", onScroll);
       document.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerout", onOut);
       if (raf) cancelAnimationFrame(raf);

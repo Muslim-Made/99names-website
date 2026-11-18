@@ -13,10 +13,10 @@ export default function Footer() {
         <div className="fgrid">
           <div>
             <div className="brand"><Mark size={26} /><span>99names</span></div>
-            <p className="note">Light, by name.<br />One name a week. Ninety-nine ways He's near.</p>
+            <p className="note">Light, by name.<br />Learn the ninety-nine, four at a time.</p>
             <p className="ar sig">الأسماء الحسنى</p>
           </div>
-          <div className="fcol"><b>Explore</b><Link href="/names">All 99 names</Link><Link href="/remember">Remember</Link><Link href="/send">Send a name</Link><Link href="/app">The app</Link></div>
+          <div className="fcol"><b>Explore</b><Link href="/quiz">The quiz</Link><Link href="/names">All 99 names</Link><Link href="/send">Send a name</Link><Link href="/app">The app</Link></div>
           <div className="fcol"><b>Shop</b><Link href="/shop/deck">The Deck</Link><Link href="/send">Send-a-Name</Link><Link href="/shop/print">The Name Print</Link><Link href="/shop/ramadan">Ramadan Edition</Link><Link href="/shop">Everything</Link></div>
           <div className="fcol"><b>This hour</b>
             <p className="note" style={{ marginBottom: 10 }}>The site is tinted for <strong>{HOUR_LABEL[hour]}</strong>{override ? " (set by you)" : ` (${source})`}. Change it from the dial in the top bar.</p>

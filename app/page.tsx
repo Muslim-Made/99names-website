@@ -1,17 +1,27 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { NAMES } from "@/lib/names";
-import { Mark } from "@/components/Rays";
 import NoorField from "@/components/NoorField";
-import { HourHero, HourStrip } from "@/components/HourHome";
+import Ring from "@/components/Ring";
+import { HourStrip } from "@/components/HourHome";
+import { HeroQuestion, HeroActions, HowScene, LevelRail } from "@/components/HomeQuiz";
 
 export const revalidate = 3600;
+
+const VERSE_EN = "And to Allah belong the best names, so invoke Him by them.".split(" ");
+const ALL = NAMES.map(n => n.n);
 
 export default function Home() {
   return (
     <>
       <header className="wrap hero">
         <NoorField />
-        <HourHero />
+        <div className="hero-text" data-reveal data-stagger>
+          <h1>Learn the 99 Names of Allah, <em>by heart.</em></h1>
+          <p className="lede">Four names at a time, a few minutes a day. Free, no account, no streaks to keep.</p>
+          <HeroActions />
+        </div>
+        <HeroQuestion />
         <div className="scroll-cue" aria-hidden="true"><span /></div>
       </header>
 
@@ -25,6 +35,40 @@ export default function Home() {
         </div>
       </div>
 
+      <section className="how-sec">
+        <div className="wrap">
+          <div data-reveal>
+            <h2>Three small steps, <em>as often as you like.</em></h2>
+            <p className="lede">The quiz teaches before it asks. You meet a name, you answer a few gentle questions about it, and it stays.</p>
+          </div>
+          <HowScene />
+        </div>
+      </section>
+
+      <section className="levels-sec">
+        <div className="wrap">
+          <div className="sec-head" data-reveal>
+            <div>
+              <h2>Nine levels, <em>dawn to night.</em></h2>
+              <p className="lede">Eleven names each, in the traditional order, from Ar-Rahman at Fajr to As-Sabur at Isha. Step in wherever you like.</p>
+            </div>
+            <Link href="/quiz?mode=check" className="pill o">Already know some? Find your number</Link>
+          </div>
+        </div>
+        <div data-reveal><LevelRail /></div>
+      </section>
+
+      <section className="verse-sec" data-scrub>
+        <div className="wrap">
+          <div className="nasta verse-ar">وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا</div>
+          <p className="verse-en scrub-words">
+            {VERSE_EN.map((w, i) => <span key={i} style={{ "--i": (i / VERSE_EN.length).toFixed(3) } as CSSProperties}>{w} </span>)}
+          </p>
+          <p className="note verse-ref">Al-A&rsquo;raf 7:180</p>
+          <p className="lede verse-why" data-reveal>In the Qur&rsquo;an and the words of the Prophet ﷺ, Allah describes Himself through His names: mercy, patience, light, majesty, nearness. Each one is a window. Learning them is how you come to know who you are speaking to.</p>
+        </div>
+      </section>
+
       <section>
         <div className="wrap">
           <HourStrip />
@@ -32,36 +76,32 @@ export default function Home() {
       </section>
 
       <section>
-        <div className="wrap grid g3" data-reveal data-stagger>
-          <Link href="/remember" className="card feature"><div className="eyebrow">Remember</div><h3 style={{ marginTop: 10 }}>Do you remember this one?</h3><p className="note">A quiet ten-question round. Wrong answers just show you the name again, warmly. Share how many you know.</p></Link>
-          <Link href="/send" className="card feature"><div className="eyebrow">Send a name</div><h3 style={{ marginTop: 10 }}>For whoever needs it this week.</h3><p className="note">Tell us who it's for and what they're going through. Send a link for free, or the real card, posted anywhere, for $6.</p></Link>
-          <Link href="/app" className="card feature"><div className="eyebrow">The app</div><h3 style={{ marginTop: 10 }}>It knows what time it is.</h3><p className="note">Blush at Fajr, navy at Isha. One name, one breath, no streaks, no guilt.</p></Link>
+        <div className="wrap grid g2" data-reveal data-stagger>
+          <Link href="/send" className="card feature">
+            <h3>Send a name to someone.</h3>
+            <p className="note">Tell us who it is for and what they are going through. Send a link for free, or the real card, posted anywhere, for $6.</p>
+            <span className="feature-go">Send a name →</span>
+          </Link>
+          <Link href="/app" className="card feature">
+            <h3>The app knows what time it is.</h3>
+            <p className="note">Blush at Fajr, navy at Isha. One name, one breath, and the same quiz in your pocket. Coming to iOS and Android.</p>
+            <span className="feature-go">About the app →</span>
+          </Link>
         </div>
-      </section>
-
-      <section>
-        <div className="wrap grid g2" style={{ alignItems: "center", gap: 56 }}>
-          <div data-reveal data-stagger>
-            <div className="eyebrow">Why the names</div>
-            <h2>Know Him <em>by name.</em></h2>
-            <p className="lede">In the Qur'an and the words of the Prophet ﷺ, Allah describes Himself through His names — the Most Beautiful Names, <em>al-Asmā' al-Ḥusnā</em>. Mercy, patience, light, majesty, nearness. Each one is a window.</p>
-            <p className="note" style={{ marginTop: 16 }}>"And to Allah belong the best names, so invoke Him by them." — Al-A'raf 7:180</p>
-            <div className="nasta" style={{ fontSize: 30, marginTop: 18, textAlign: "left" }}>وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَىٰ فَادْعُوهُ بِهَا</div>
-          </div>
-          <div className="card" data-reveal data-parallax="0.05" style={{ display: "grid", gap: 18 }}>
-            <div style={{ display: "flex", gap: 14, alignItems: "center" }}><Mark size={40} /><div><b style={{ fontFamily: "var(--disp)", fontWeight: 400, fontSize: 20 }}>Ninety-nine rays</b><div className="note">Our mark has exactly 99 rays. One per name. Count them.</div></div></div>
-            <div className="note"><b style={{ fontWeight: 500 }}>One a week.</b> At that pace you'll know all 99 in under two years. Slower is fine. This isn't a race.</div>
-            <div className="note"><b style={{ fontWeight: 500 }}>The hour.</b> This page is tinted for the current prayer time where you are. Use the dial in the top bar to see any other hour.</div>
-          </div>
-        </div>
-      </section>
-
-      <section>
         <div className="wrap">
-          <div className="card deck-cta" data-reveal>
-            <div data-parallax="0.03"><div className="eyebrow">The Deck</div><h2 style={{ fontSize: "clamp(36px,4.5vw,56px)" }}>Ninety-nine, <em>in your hand.</em></h2><p className="note">99 soft-touch cards, dawn to night. Keep one on the nightstand. Send one to a friend. $34, ships worldwide.</p></div>
-            <Link href="/shop" className="pill">Shop</Link>
-          </div>
+          <Link href="/shop" className="deckline" data-reveal>
+            <span><b>The Deck.</b> All ninety-nine as soft-touch cards, dawn to night. $34, ships worldwide.</span>
+            <span className="feature-go">Visit the shop →</span>
+          </Link>
+        </div>
+      </section>
+
+      <section className="closing">
+        <div className="wrap" data-reveal>
+          <Ring lit={ALL} fresh={ALL} pace={0.022} className="closing-ring" />
+          <h2>Begin with <em>one name.</em></h2>
+          <p className="lede">Ar-Rahman is waiting at level one. At one name a week you would know all ninety-nine in under two years. Slower is fine.</p>
+          <Link href="/quiz" className="pill big">Start the quiz</Link>
         </div>
       </section>
     </>
