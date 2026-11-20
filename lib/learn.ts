@@ -17,19 +17,22 @@ export const KEY = "99names:mastery";
 const INTERVALS = [1, 3, 7, 14, 30, 60];
 export const today = () => Math.floor(Date.now() / 86400000);
 
+type Store = { getItem(k: string): string | null; setItem(k: string, v: string): void };
+const ls = (): Store | undefined => (globalThis as { localStorage?: Store }).localStorage;
+
 export function loadMastery(): Mastery {
   try {
-    const m = JSON.parse(localStorage.getItem(KEY) || "null");
+    const m = JSON.parse(ls()?.getItem(KEY) || "null");
     if (m && typeof m === "object") return m;
     // migrate the very first "known" list, one correct each
-    const known: number[] = JSON.parse(localStorage.getItem("99names:known") || "[]");
+    const known: number[] = JSON.parse(ls()?.getItem("99names:known") || "[]");
     const out: Mastery = {};
     known.forEach(n => { out[n] = { c: 1, f: ["ar2en"] }; });
     return out;
   } catch { return {}; }
 }
 export function saveMastery(m: Mastery) {
-  try { localStorage.setItem(KEY, JSON.stringify(m)); } catch { /* private mode: progress lasts for this visit */ }
+  try { ls()?.setItem(KEY, JSON.stringify(m)); } catch { /* private mode: progress lasts for this visit */ }
 }
 
 export const isMastered = (r?: Rec) => !!r && r.c >= 2 && r.f.length >= 2;
@@ -125,11 +128,11 @@ const fresh = (fmts: ChoiceFmt[], rec?: Rec) => {
 export const FOCUS = 4;
 
 /**
- * One lesson in a level: meet up to four names, recognise each, match them all,
+ * One lesson in a level: meet up to four names (`focusSize`; the phone app asks for one a day), recognise each, match them all,
  * then recall each, with a couple of older names folded in so they stay warm.
  * A perfect lesson masters its names. When the level is already done, it becomes practice.
  */
-export function buildLesson(level: number, m: Mastery): { steps: Step[]; focus: Name[]; practice: boolean } {
+export function buildLesson(level: number, m: Mastery, focusSize: number = FOCUS): { steps: Step[]; focus: Name[]; practice: boolean } {
   const pool = LEVELS[level];
   const open = pool.filter(n => !isMastered(m[n.n]));
   if (!open.length) {
@@ -140,7 +143,7 @@ export function buildLesson(level: number, m: Mastery): { steps: Step[]; focus: 
     return { steps, focus, practice: true };
   }
   // finish what was started, then the new ones in order
-  const focus = [...open.filter(n => isLearning(m[n.n])), ...open.filter(n => !isLearning(m[n.n]))].slice(0, FOCUS);
+  const focus = [...open.filter(n => isLearning(m[n.n])), ...open.filter(n => !isLearning(m[n.n]))].slice(0, focusSize);
   const steps: Step[] = [];
   for (let i = 0; i < focus.length; i += 2) {
     const pair = focus.slice(i, i + 2);
@@ -148,8 +151,11 @@ export function buildLesson(level: number, m: Mastery): { steps: Step[]; focus: 
     pair.forEach(n => steps.push(buildChoice(n, fresh(RECOGNISE, m[n.n]), pool)));
   }
   // matching wants at least four cards on the table
-  const table = [...focus, ...shuffle(pool.filter(n => !focus.includes(n)))].slice(0, 4);
-  steps.push({ kind: "match", names: table });
+  // the new names sit among ones already known where possible, so a first try is rarely a guess
+  const known = (n: Name) => !focus.includes(n) && isMastered(m[n.n]);
+  const table = [...focus, ...shuffle(pool.filter(known)), ...shuffle(NAMES.filter(n => known(n) && !pool.includes(n))), ...shuffle(pool.filter(n => !focus.includes(n) && !isMastered(m[n.n])))].slice(0, 4);
+  // matching is only fair when every card on the table has been met: the lesson's own names, or ones already yours
+  if (table.length === 4 && table.every(n => focus.includes(n) || isMastered(m[n.n]))) steps.push({ kind: "match", names: table });
   // older names that are yours already, to keep them warm
   const older = NAMES.filter(n => n.n <= pool[10].n && !focus.includes(n) && isMastered(m[n.n]))
     .sort((a, b) => (m[a.n].d ?? 0) - (m[b.n].d ?? 0)).slice(0, 2);

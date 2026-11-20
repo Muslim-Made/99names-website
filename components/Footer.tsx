@@ -24,7 +24,7 @@ export default function Footer() {
             <p className="note" style={{ marginTop: 6 }}>A quiet, generative sound for this hour. Nothing recorded, nothing looping.</p>
           </div>
         </div>
-        <div className="fbot"><span>© {new Date().getFullYear()} 99names</span><span>Instagram · @official99names</span></div>
+        <div className="fbot"><span>© {new Date().getFullYear()} 99names · <Link href="/privacy">Privacy</Link> · <Link href="/support">Help</Link></span><span>Instagram · @official99names</span></div>
       </div>
     </footer>
   );

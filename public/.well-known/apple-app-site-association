@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["54GMH5U25A.net.ninetyninenames.app"],
+        "components": [
+          { "/": "/for/*", "comment": "A name someone sent you" },
+          { "/": "/with/*", "comment": "An invitation to a circle" }
+        ]
+      }
+    ]
+  }
+}
