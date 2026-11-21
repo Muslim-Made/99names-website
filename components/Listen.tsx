@@ -1,19 +1,14 @@
 "use client";
 import { useState } from "react";
+import { sayName, stopSaying } from "@/lib/say";
 
-/** Placeholder recitation via the browser's Arabic voice until studio audio exists. */
-export default function Listen({ text, label = "Listen" }: { text: string; label?: string }) {
+/** Hear a name, recited once from the studio recordings. Tapping again stops it. */
+export default function Listen({ slug, text, label = "Listen" }: { slug: string; text: string; label?: string }) {
   const [on, setOn] = useState(false);
-  const speak = () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ar-SA"; u.rate = 0.75;
-    const v = window.speechSynthesis.getVoices().find(v => v.lang.startsWith("ar"));
-    if (v) u.voice = v;
-    u.onend = () => setOn(false);
+  const toggle = () => {
+    if (on) { stopSaying(); setOn(false); return; }
     setOn(true);
-    window.speechSynthesis.speak(u);
+    sayName(slug, text, () => setOn(false));
   };
-  return <button className="pill" onClick={speak} aria-pressed={on}>{on ? "◼ Playing" : `▶ ${label}`}</button>;
+  return <button className="pill" onClick={toggle} aria-pressed={on}>{on ? "◼ Playing" : `▶ ${label}`}</button>;
 }

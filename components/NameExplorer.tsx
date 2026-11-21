@@ -68,7 +68,7 @@ export default function NameExplorer({ start, banner }: { start: number; banner?
         <h1 className="nd-h1">{n.tr} <em>{n.en}</em></h1>
         <p className="lede nd-lede">{n.meaning}</p>
         <div className="nd-actions">
-          <Listen text={n.ar} />
+          <Listen slug={n.slug} text={n.ar} />
           <Link href={`/send?name=${n.slug}`} className="pill o">Send this name</Link>
           <Link href={`/quiz?level=${level}`} className="pill o">Learn it in the quiz</Link>
         </div>
@@ -146,7 +146,7 @@ export function NamesBrowse() {
         <p className="wheel-line">{n.line}</p>
         <div className="nd-actions">
           <Link href={`/names/${n.slug}`} className="pill">Read this name</Link>
-          <Listen text={n.ar} />
+          <Listen slug={n.slug} text={n.ar} />
         </div>
       </div>
       <NamesIndex jump={i => { wheel.current?.goTo(i); window.scrollTo({ top: 0, behavior: "smooth" }); }} />

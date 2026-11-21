@@ -50,7 +50,7 @@ export default function Reveal({ sent, name }: { sent: Sent; name: Name }) {
         <p className="lede">{name.meaning}</p>
         <p className="line">{name.line}</p>
         <div className="actions-row" style={{ marginTop: 22 }}>
-          <Listen text={name.ar} />
+          <Listen slug={name.slug} text={name.ar} />
           <Link href={`/names/${name.slug}`} className="pill o">Read more about this name</Link>
           <Breath />
         </div>

@@ -9,6 +9,7 @@ import {
   grade, markSeen, buildLesson, buildReview, buildCheck, dueNames, estimate, retryOf, optLabel, promptText, shuffle,
 } from "@/lib/learn";
 import { Mark } from "@/components/Rays";
+import { sayName } from "@/lib/say";
 import Ring from "@/components/Ring";
 import NameCard from "@/components/NameCard";
 import { SWATCH } from "@/components/HourDial";
@@ -41,15 +42,6 @@ function chime(right: boolean) {
       o.start(t + i * 0.09); o.stop(t + i * 0.09 + 0.75);
     });
   } catch { /* no audio: the quiz is fine without it */ }
-}
-function speak(text: string) {
-  if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = "ar-SA"; u.rate = 0.75;
-  const v = window.speechSynthesis.getVoices().find(v => v.lang.startsWith("ar"));
-  if (v) u.voice = v;
-  window.speechSynthesis.speak(u);
 }
 
 /* ---------------- the page ---------------- */
@@ -278,9 +270,9 @@ function MeetStep({ s, onDone }: { s: Meet; onDone: () => void }) {
         </div>
       </div>
       <h2 className="meet-h">{n.tr}</h2>
-      <p className="note meet-note">{turned ? "Say it once, slowly. Then carry on." : "This is how it is written. Turn the card to read what it means."}</p>
+      <p className="note meet-note">{turned ? "Hear it, then say it once, slowly." : "This is how it is written. Turn the card to read what it means."}</p>
       <div className="actions-row">
-        <button className="pill o" onClick={() => speak(n.ar)}>▶ Hear it</button>
+        <button className="pill o" onClick={() => sayName(n.slug, n.ar)}>▶ Hear it</button>
         {turned
           ? <button className="pill" onClick={onDone}>I&rsquo;ve met this one</button>
           : <button className="pill" onClick={() => setTurned(true)}>Turn it over</button>}
@@ -340,7 +332,7 @@ function ChoiceStep({ q, onAnswer, onNext, ctx }: { q: Choice; onAnswer: (right:
               <p className="note"><strong>{q.name.tr}</strong> · {q.name.en}. {right ? q.name.line : ctx === "check" ? "Now you have met it." : "It will come back around. That is how remembering works."}</p>
             </div>
             <div className="qfeed-act">
-              <button className="qhear" onClick={() => speak(q.name.ar)} aria-label={`Hear ${q.name.tr}`}>▶</button>
+              <button className="qhear" onClick={() => sayName(q.name.slug, q.name.ar)} aria-label={`Hear ${q.name.tr}`}>▶</button>
               <button className="pill" onClick={onNext} autoFocus>Continue</button>
             </div>
           </div>
