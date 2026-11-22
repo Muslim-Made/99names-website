@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Privacy",
+  title: "Privacy Policy",
   description: "What the 99names app and website keep, what leaves your phone, and how to remove it. No account, no ads, no trackers.",
 };
 
@@ -11,6 +11,7 @@ const card = { padding: 24 } as const;
 export default function PrivacyPage() {
   return (
     <section className="wrap" style={{ paddingTop: 56, paddingBottom: 40, maxWidth: 860 }}>
+      <h1 style={{ fontSize: "clamp(30px, 5vw, 44px)", marginBottom: 18 }}>Privacy Policy</h1>
       <h2>Yours, <em>on your phone.</em></h2>
       <p className="lede">99names has no account, no adverts and no trackers. What you learn stays on your device. This page says exactly what is kept, what leaves, and how to remove it.</p>
       <p className="note" style={{ marginTop: 14 }}>Last updated 18 November 2026. It covers the 99names app for iPhone and Android, and this website.</p>
