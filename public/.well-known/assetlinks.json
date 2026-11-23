@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "net.ninetyninenames.app",
+      "sha256_cert_fingerprints": [
+        "A9:80:D1:8B:D7:ED:EB:62:7C:D6:8A:1B:94:5D:FC:0F:64:85:7C:A3:CE:4A:82:DD:07:73:1B:4C:89:F5:D3:FB",
+        "9A:22:79:EC:C6:81:88:A5:01:57:E0:03:CE:4D:D6:F2:0E:24:77:35:AC:F7:34:55:83:FD:D2:E3:42:C4:C2:FC"
+      ]
+    }
+  }
+]

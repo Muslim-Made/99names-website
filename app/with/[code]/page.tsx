@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import InviteActions from "@/components/InviteActions";
 import { load, normCode, validCode } from "@/lib/circle";
 import Ring from "@/components/Ring";
 
@@ -17,12 +17,8 @@ export default async function With({ params }: { params: Promise<{ code: string 
         <Ring lit={Array.from({ length: host?.count ?? 0 }, (_, i) => i + 1)} className="closing-ring"><b>{host?.count ?? 0}</b><span>of 99</span></Ring>
         <h2>{host ? <>{host.name} invited you <em>to learn together.</em></> : <>Learn the 99 Names <em>together.</em></>}</h2>
         <p className="lede">In the 99names app you each see the other&rsquo;s ring fill, one ray for every name known. No scores, no ranking, nothing else shared.</p>
-        <p className="lede" style={{ marginBottom: 8 }}>Your code is <strong style={{ fontFamily: "var(--disp)", letterSpacing: ".06em" }}>{code}</strong>. Open the app, go to You, then Your circle, and enter it.</p>
-        <div className="actions-row" style={{ justifyContent: "center" }}>
-          <a className="pill big" href={`ninetyninenames://with/${code}`}>Open in the app</a>
-          <Link className="pill o big" href="/app">Get the app</Link>
-          <Link className="pill o big" href="/quiz">Start on the web</Link>
-        </div>
+        <p className="lede" style={{ marginBottom: 8 }}>Your code is <strong style={{ fontFamily: "var(--disp)", letterSpacing: ".06em" }}>{code}</strong>. Get the free app; when it opens, it offers to paste the code and takes you straight in.</p>
+        <InviteActions code={code} />
       </div>
     </section>
   );

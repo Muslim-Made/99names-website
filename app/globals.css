@@ -38,6 +38,7 @@ em{font-style:italic;font-weight:400}
 .eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--fg2);font-weight:500}
 .lede{font-size:clamp(17px,1.5vw,20px);max-width:58ch;color:var(--fg2);line-height:1.55}
 .note{font-size:14px;color:var(--fg2);line-height:1.6;max-width:60ch}
+.linkish{background:none;border:0;padding:0;font:inherit;color:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .pill{display:inline-flex;align-items:center;gap:8px;background:var(--fg);color:var(--g2);padding:13px 26px;border-radius:999px;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;transition:transform .2s;white-space:nowrap}
 html[data-hour="maghrib"] .pill,html[data-hour="isha"] .pill{color:var(--night)}
 .pill:hover{transform:translateY(-1px)}
